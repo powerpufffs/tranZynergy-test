@@ -2,15 +2,21 @@
 
 import React from "react";
 import { css } from "@emotion/core";
-import { FaEnvelope, FaPhone, FaUserAlt, FaSignOutAlt } from "react-icons/fa";
+import {
+  FaEnvelope,
+  FaPhone,
+  FaUserAlt,
+  FaSignOutAlt,
+  FaLongArrowAltUp,
+} from "react-icons/fa";
 import { MdGridOn, MdViewHeadline } from "react-icons/md";
 import { motion } from "framer-motion";
 import randomUserAxios from "../api/random-user";
 import { useQuery } from "react-query";
 import GlobalText from "../../localization";
 import Card from "../components/Card";
-import { useScrollRestoration } from "gatsby";
 import { navigate } from "@reach/router";
+import { AuthContext } from "../utils/authContext";
 
 const textData = GlobalText.english.pages.admin;
 
@@ -31,6 +37,7 @@ const getUsers = (number = 10) => {
 
 const SideBar = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const { logout } = React.useContext(AuthContext);
   const menuOptions = [
     {
       icon: FaUserAlt,
@@ -40,7 +47,7 @@ const SideBar = () => {
     {
       icon: FaSignOutAlt,
       title: "Log out",
-      action: () => navigate("/"),
+      action: logout,
     },
   ];
   return (

@@ -48,6 +48,7 @@ const Login = () => {
     }
 
     setTimeout(() => {
+      console.log("going");
       setUserInfo({ username: email });
       navigate("admin");
     }, 1500);

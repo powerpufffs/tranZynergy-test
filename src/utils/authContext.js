@@ -7,14 +7,14 @@ const AuthProvider = ({ children }) => {
   const userInfo =
     typeof window !== "undefined" && localStorage.getItem("userInfo");
   const [authState, setAuthState] = React.useState({
-    userInfo: userInfo || {},
+    userInfo: userInfo || null,
   });
 
-  const isLoggedIn = () => authState && authState === {};
+  const isLoggedIn = () => !!authState.userInfo;
 
   const logout = () => {
     localStorage.removeItem("userInfo");
-    setAuthState({ userInfo: {} });
+    setAuthState({ userInfo: null });
     navigate("/");
   };
 
