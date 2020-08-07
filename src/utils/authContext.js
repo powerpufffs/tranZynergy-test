@@ -4,9 +4,10 @@ import { navigate } from "@reach/router";
 const AuthContext = React.createContext();
 
 const AuthProvider = ({ children }) => {
-  const userInfo = localStorage.getItem("userInfo");
+  const userInfo =
+    typeof window !== "undefined" && localStorage.getItem("userInfo");
   const [authState, setAuthState] = React.useState({
-    userInfo: userInfo ? JSON.parse(userInfo) : {},
+    userInfo: userInfo || {},
   });
 
   const isLoggedIn = () => authState && authState === {};
@@ -20,7 +21,7 @@ const AuthProvider = ({ children }) => {
   const setAuthInfo = (userInfo) => {
     console.log(userInfo);
     const { username } = userInfo;
-    localStorage.setItem("userInfo", JSON.stringify(username));
+    typeof window !== "undefined" && localStorage.setItem("userInfo", username);
     setAuthState({ userInfo: { username } });
   };
 
