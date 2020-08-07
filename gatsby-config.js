@@ -36,6 +36,9 @@ module.exports = {
         ],
       },
     },
+    {
+      resolve: `gatsby-plugin-emotion`,
+    },
     `gatsby-plugin-offline`,
   ],
 };
