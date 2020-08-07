@@ -5,16 +5,22 @@ const AuthContext = React.createContext();
 
 const AuthProvider = ({ children }) => {
   const userInfo = localStorage.getItem("userInfo");
-  const [authState, setAuthState] = React.useState({ userInfo: null });
+  const [authState, setAuthState] = React.useState({
+    userInfo: userInfo ? JSON.parse(userInfo) : {},
+  });
+
+  const isLoggedIn = () => authState && authState === {};
 
   const logout = () => {
-    setAuthState({ userInfo: userInfo ? JSON.parse(userInfo) : {} });
+    localStorage.removeItem("userInfo");
+    setAuthState({ userInfo: {} });
     navigate("/");
   };
 
-  const setAuthInfo = ({ userInfo }) => {
+  const setAuthInfo = (userInfo) => {
+    console.log(userInfo);
     const { username } = userInfo;
-    localStorage.setItem("username", username);
+    localStorage.setItem("userInfo", JSON.stringify(username));
     setAuthState({ userInfo: { username } });
   };
 
@@ -22,6 +28,7 @@ const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         logout,
+        isLoggedIn,
         authState,
         setUserInfo: setAuthInfo,
       }}
@@ -31,4 +38,4 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-export default { AuthContext, AuthProvider };
+export { AuthContext, AuthProvider };

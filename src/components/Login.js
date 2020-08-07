@@ -6,6 +6,7 @@ import GlobalText from "../../localization";
 
 import { Form, Formik, useField } from "formik";
 import * as Yup from "yup";
+import { AuthContext } from "../utils/authContext";
 
 const textData = GlobalText.english.pages.login;
 
@@ -36,13 +37,20 @@ const FormInput = ({ ariaLabel, name, type, placeholder }) => {
 };
 
 const Login = () => {
-  //   const [loginStatus, setLoginStatus] = React.useState("");
+  const { setUserInfo } = React.useContext(AuthContext);
+  const [loginStatus, setLoginStatus] = React.useState("");
   const onSubmit = (credentials) => {
-    console.log(credentials);
+    const { password, email } = credentials;
+
+    if (email !== "123@gmail.com" || password !== "123") {
+      setLoginStatus("failed");
+      return;
+    }
+
     setTimeout(() => {
-      //TODO: write validation
+      setUserInfo({ username: email });
       navigate("admin");
-    }, 2000);
+    }, 1500);
   };
 
   return (
@@ -106,6 +114,9 @@ const Login = () => {
                   />
                 </div>
               </div>
+              {loginStatus === "failed" && (
+                <h1 className="text-pink-800">Wrong username or password.</h1>
+              )}
               <div className="mt-10">
                 <button
                   type="submit"
