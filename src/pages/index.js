@@ -27,9 +27,9 @@ function IndexPage() {
   return (
     <AuthProvider>
       <Router>
+        <FourOFour default />
         <AuthRoutes element={Admin} path="/admin" />
         <Login path="/" />
-        <FourOFour path="*" />
       </Router>
     </AuthProvider>
   );
