@@ -27,8 +27,8 @@ function IndexPage() {
   return (
     <AuthProvider>
       <Router>
+        <AuthRoutes element={Admin} path="/admin" />
         <Login path="/" />
-        <AuthRoutes element={Admin} path="admin" />
         <FourOFour path="*" />
       </Router>
     </AuthProvider>
